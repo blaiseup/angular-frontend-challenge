@@ -11,15 +11,15 @@
     <mat-tab label="In Progress">
       <ng-container *ngIf="inProgressTodos$ | async as inProgressTodos">
         <app-todo-list [todos]=" inProgressTodos" (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
-          (onChangeTodoStatusInProgress)="changeTodoStatusInProgress($event)" (onRemoveTodo)="removeTodo($event)"
-          [emptyListMessage]="'No todos in progress'"></app-todo-list>
+          (onChangeTodoStatusInProgress)="changeTodoStatusInProgress($event)" (onEditTodo)="editTodo($event)"
+          (onRemoveTodo)="removeTodo($event)" [emptyListMessage]="'No todos in progress'"></app-todo-list>
       </ng-container>
     </mat-tab>
     <mat-tab label="Completed">
       <ng-container *ngIf="completeTodos$ | async as completeTodos">
         <app-todo-list [todos]="completeTodos" (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
-          (onChangeTodoStatusInProgress)="changeTodoStatusInProgress($event)" (onRemoveTodo)="removeTodo($event)"
-          [emptyListMessage]="'No completed todos'"></app-todo-list>
+          (onChangeTodoStatusInProgress)="changeTodoStatusInProgress($event)" (onEditTodo)="editTodo($event)"
+          (onRemoveTodo)="removeTodo($event)" [emptyListMessage]="'No completed todos'"></app-todo-list>
       </ng-container>
     </mat-tab>
   </mat-tab-group>
