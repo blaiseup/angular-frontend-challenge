@@ -1,0 +1,13 @@
+.todo-list-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.todo-list-form .mat-form-field {
+  width: 300px;
+}
+
+.todo-list-form .mat-raised-button {
+  max-width: 300px;
+}

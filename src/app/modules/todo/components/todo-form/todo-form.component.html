@@ -1,0 +1,15 @@
+<form class="todo-list-form" [formGroup]="todoForm" (ngSubmit)="handleSubmit()">
+  <mat-form-field>
+    <mat-label>Todo List Item</mat-label>
+    <input matInput placeholder="E.g. Send Email" formControlName="name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Priority</mat-label>
+    <mat-select formControlName="priority">
+      <mat-option *ngFor="let priority of todoPriorities" [value]="priority">{{ priority }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" [disabled]="todoForm.invalid" type="submit">Save Todo</button>
+</form>
