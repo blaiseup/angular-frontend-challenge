@@ -20,6 +20,8 @@ export class TodoListComponent {
 
   @Output() onRemoveTodo = new EventEmitter<Todo>();
 
+  @Output() onEditTodo = new EventEmitter<Todo>();
+
   changeTodoStatusComplete(todo: Todo) {
     this.onChangeTodoStatusComplete.emit(todo);
   }
@@ -30,5 +32,9 @@ export class TodoListComponent {
 
   removeTodo(todo: Todo) {
     this.onRemoveTodo.emit(todo);
+  }
+
+  editTodo(todo: Todo) {
+    this.onEditTodo.emit(todo);
   }
 }

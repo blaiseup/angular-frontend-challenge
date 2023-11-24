@@ -4,7 +4,7 @@
     <mat-tab label="All">
       <ng-container *ngIf="allTodos$ | async as allTodos">
         <app-todo-list [todos]="allTodos" (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
-          (onChangeTodoStatusInProgress)="changeTodoStatusInProgress($event)"
+          (onChangeTodoStatusInProgress)="changeTodoStatusInProgress($event)" (onEditTodo)="editTodo($event)"
           (onRemoveTodo)="removeTodo($event)"></app-todo-list>
       </ng-container>
     </mat-tab>

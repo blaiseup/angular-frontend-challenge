@@ -3,7 +3,7 @@ import { filter, Observable, take } from "rxjs";
 import { getTodos, addTodo, removeTodo, changeTodoStatus, changeTodoName } from "../store/todo/todo.actions";
 import { select, Store } from "@ngrx/store";
 import { getAllCompleteTodos, getAllInProgressTodos, getAllTodos } from "../store/todo/todo.selectors";
-import { MatDialog } from "@angular/material/dialog";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { EditTodoDialogComponent } from "./components/edit-todo-dialog/edit-todo-dialog.component";
 import { Todo, TodoPriority, TodoStatus } from "src/app/models/todo.model";
 
@@ -19,7 +19,7 @@ export class TodoComponent implements OnInit {
   inProgressTodos$: Observable<Todo[]> = this.store.pipe(select(getAllInProgressTodos));
   completeTodos$: Observable<Todo[]> = this.store.pipe(select(getAllCompleteTodos));
 
-  constructor(private store: Store, public dialog: MatDialog) {}
+  constructor(private store: Store, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.store.dispatch(getTodos());
@@ -31,6 +31,18 @@ export class TodoComponent implements OnInit {
 
   changeTodoName(todo: Todo) {
     this.store.dispatch(changeTodoName({ todoId: todo.id, name: todo.name }));
+  }
+
+  editTodo(todo: Todo) {
+    const dialogRef: MatDialogRef<EditTodoDialogComponent, Todo> = this.dialog.open(EditTodoDialogComponent, {
+      data: { todo: todo },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        return;
+      }
+      this.changeTodoName(result);
+    });
   }
 
   removeTodo(todo: Todo) {
