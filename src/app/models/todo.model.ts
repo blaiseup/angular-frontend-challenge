@@ -5,6 +5,6 @@ export enum TodoStatus {
 
 export interface Todo {
   id: number;
-  name?: string;
+  name: string;
   status: TodoStatus;
 }
