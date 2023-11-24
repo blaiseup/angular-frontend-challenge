@@ -8,7 +8,7 @@ import { Todo, TodoPriority } from "src/app/models/todo.model";
   styleUrls: ["./todo-form.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoFormComponent implements OnChanges {
+export class TodoFormComponent implements OnInit {
   @Input() todo: Todo;
 
   @Output() todoSubmitted = new EventEmitter<{ name: string; priority: TodoPriority }>();
@@ -24,7 +24,7 @@ export class TodoFormComponent implements OnChanges {
     });
   }
 
-  ngOnChanges(): void {
+  ngOnInit(): void {
     if (this.todo) {
       this.todoForm.patchValue({
         name: this.todo.name,
