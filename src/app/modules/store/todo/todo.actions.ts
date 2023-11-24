@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { createFailureAction, createSuccessAction } from '../action-utils';
-import { Todo } from './todo.reducer'
+import { Todo } from 'src/app/models/todo.model';
 
 export const getTodos = createAction('[ToDo] Get ToDo List');
 export const getTodosSuccess = createSuccessAction(

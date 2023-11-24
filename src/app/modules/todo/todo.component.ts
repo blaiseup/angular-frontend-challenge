@@ -3,10 +3,10 @@ import { filter, Observable, take } from 'rxjs';
 import { getTodos, addTodo, removeTodo, changeTodoStatus, changeTodoName } from '../store/todo/todo.actions';
 import { select, Store } from '@ngrx/store';
 import { getAllTodos } from '../store/todo/todo.selectors';
-import { TodoStatus, Todo } from '../store/todo/todo.reducer';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTodoDialogComponent } from './components/edit-todo-dialog/edit-todo-dialog.component';
+import { Todo, TodoStatus } from 'src/app/models/todo.model';
 
 
 @Component({

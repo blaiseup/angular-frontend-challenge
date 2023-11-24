@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import * as actions from './todo.actions';
 import { catchError, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Todo, TodoStatus } from "./todo.reducer"
+import { Todo, TodoStatus } from 'src/app/models/todo.model';
 
 const todos: Todo[] = [
   {
