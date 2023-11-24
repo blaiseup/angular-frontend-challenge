@@ -1,6 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 import { TodoService } from "./todo.service";
-import { TodoStatus } from "../models/todo.model";
+import { TodoPriority, TodoStatus } from "../models/todo.model";
 import { MOCK_TODOS } from "../mocks/todos.mock";
 
 describe("TodoService", () => {
@@ -27,11 +27,13 @@ describe("TodoService", () => {
 
   it("should add a todo", (done: DoneFn) => {
     const todoName = "New Todo";
+    const todoPriority = TodoPriority.High;
     const initialLength = todoService["mockTodos"].length;
 
-    todoService.addTodo(todoName).subscribe((newTodo) => {
+    todoService.addTodo(todoName, todoPriority).subscribe((newTodo) => {
       expect(newTodo.name).toBe(todoName);
       expect(newTodo.status).toBe(TodoStatus.InProgress);
+      expect(newTodo.priority).toBe(TodoPriority.High);
       expect(todoService["mockTodos"].length).toBe(initialLength + 1);
       done();
     });
@@ -47,11 +49,11 @@ describe("TodoService", () => {
       done();
     });
   });
-  
+
   it("should change todo status", (done: DoneFn) => {
     const todoId = 1;
     const newStatus = TodoStatus.Complete;
-    
+
     todoService.changeTodoStatus(todoId, newStatus).subscribe((updatedTodo) => {
       expect(updatedTodo.id).toBe(todoId);
       expect(updatedTodo.status).toBe(newStatus);

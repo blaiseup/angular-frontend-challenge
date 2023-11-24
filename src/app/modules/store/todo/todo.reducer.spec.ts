@@ -1,6 +1,6 @@
 import { reducer, initialState, TodoState } from "./todo.reducer";
 import * as actions from "./todo.actions";
-import { Todo, TodoStatus } from "src/app/models/todo.model";
+import { Todo, TodoPriority, TodoStatus } from "src/app/models/todo.model";
 
 describe("Todo Reducer", () => {
   it("should return the default state", () => {
@@ -11,7 +11,7 @@ describe("Todo Reducer", () => {
   });
 
   it("should handle getTodosSuccess action", () => {
-    const todoList: Todo[] = [{ id: 1, name: "Todo 1", status: TodoStatus.InProgress }];
+    const todoList: Todo[] = [{ id: 1, name: "Todo 1", status: TodoStatus.InProgress, priority: TodoPriority.High }];
     const action = actions.getTodosSuccess({ todoList });
     const state = reducer(initialState, action);
 
@@ -19,7 +19,7 @@ describe("Todo Reducer", () => {
   });
 
   it("should handle addTodoSuccess action", () => {
-    const newTodo: Todo = { id: 1, name: "New Todo", status: TodoStatus.InProgress };
+    const newTodo: Todo = { id: 1, name: "New Todo", status: TodoStatus.InProgress, priority: TodoPriority.High };
     const action = actions.addTodoSuccess({ todo: newTodo });
     const state = reducer(initialState, action);
 
@@ -27,7 +27,7 @@ describe("Todo Reducer", () => {
   });
 
   it("should handle changeTodoNameSuccess action", () => {
-    const existingTodo: Todo = { id: 1, name: "Old Name", status: TodoStatus.InProgress };
+    const existingTodo: Todo = { id: 1, name: "Old Name", status: TodoStatus.InProgress, priority: TodoPriority.High };
     const updatedTodo: Todo = { ...existingTodo, name: "New Name" };
     const initialStateWithTodo: TodoState = { todoList: [existingTodo] };
 
@@ -38,7 +38,7 @@ describe("Todo Reducer", () => {
   });
 
   it("should handle changeTodoStatusSuccess action", () => {
-    const existingTodo: Todo = { id: 1, name: "Todo", status: TodoStatus.InProgress };
+    const existingTodo: Todo = { id: 1, name: "Todo", status: TodoStatus.InProgress, priority: TodoPriority.High };
     const updatedTodo: Todo = { ...existingTodo, status: TodoStatus.Complete };
     const initialStateWithTodo: TodoState = { todoList: [existingTodo] };
 
@@ -49,12 +49,23 @@ describe("Todo Reducer", () => {
   });
 
   it("should handle removeTodoSuccess action", () => {
-    const todoToRemove: Todo = { id: 1, name: "Todo", status: TodoStatus.InProgress };
+    const todoToRemove: Todo = { id: 1, name: "Todo", status: TodoStatus.InProgress, priority: TodoPriority.High };
     const initialStateWithTodo: TodoState = { todoList: [todoToRemove] };
 
     const action = actions.removeTodoSuccess({ todo: todoToRemove });
     const state = reducer(initialStateWithTodo, action);
 
     expect(state.todoList).toEqual([]);
+  });
+
+  it("should handle updateTodoDetailsSuccess action", () => {
+    const existingTodo: Todo = { id: 1, name: "Old Name", status: TodoStatus.InProgress, priority: TodoPriority.High };
+    const updatedTodo: Todo = { ...existingTodo, name: "New Name", priority: TodoPriority.Low };
+    const initialStateWithTodo: TodoState = { todoList: [existingTodo] };
+
+    const action = actions.updateTodoDetailsSuccess({ todo: updatedTodo });
+    const state = reducer(initialStateWithTodo, action);
+
+    expect(state.todoList).toEqual([updatedTodo]);
   });
 });

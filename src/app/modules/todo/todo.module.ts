@@ -14,9 +14,10 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDialogModule } from "@angular/material/dialog";
 import { TodoFormComponent } from "./components/todo-form/todo-form.component";
 import { TodoListComponent } from "./components/todo-list/todo-list.component";
+import { PrioritySortPipe } from "./pipes/priority-sort.pipe";
 
 @NgModule({
-  declarations: [TodoComponent, EditTodoDialogComponent, TodoFormComponent, TodoListComponent],
+  declarations: [TodoComponent, EditTodoDialogComponent, TodoFormComponent, TodoListComponent, PrioritySortPipe],
   imports: [
     CommonModule,
     TodoRoutingModule,

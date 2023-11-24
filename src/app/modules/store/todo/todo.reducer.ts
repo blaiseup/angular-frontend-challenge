@@ -30,6 +30,10 @@ const todoReducer = createReducer(
   on(actions.removeTodoSuccess, (state, { todo }) => ({
     ...state,
     todoList: state.todoList.filter((el) => el.id !== todo.id),
+  })),
+  on(actions.updateTodoDetailsSuccess, (state, { todo }) => ({
+    ...state,
+    todoList: state.todoList.map((el) => (el.id === todo.id ? { ...el, name: todo.name, priority: todo.priority } : el)),
   }))
 );
 

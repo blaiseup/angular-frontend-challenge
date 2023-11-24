@@ -13,5 +13,5 @@ export interface Todo {
   id: number;
   name: string;
   status: TodoStatus;
-  priority?: TodoPriority;
+  priority: TodoPriority;
 }

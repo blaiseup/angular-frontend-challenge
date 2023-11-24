@@ -23,8 +23,8 @@ export class TodoEffects {
   addTodo$ = createEffect(() =>
     this.actions$.pipe(
       ofType(actions.addTodo),
-      switchMap(({ name }) =>
-        this.todoService.addTodo(name).pipe(
+      switchMap(({ name, priority }) =>
+        this.todoService.addTodo(name, priority).pipe(
           map((todo) => actions.addTodoSuccess({ todo })),
           catchError((error) => of(actions.addTodoFailure({ error })))
         )
@@ -63,6 +63,18 @@ export class TodoEffects {
         this.todoService.removeTodo(todoId).pipe(
           map((todo) => actions.removeTodoSuccess({ todo })),
           catchError((error) => of(actions.removeTodoFailure({ error })))
+        )
+      )
+    )
+  );
+
+  updateTodoDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.updateTodoDetails),
+      switchMap(({ todoId, name, priority }) =>
+        this.todoService.updateTodoDetails(todoId, name, priority).pipe(
+          map((todo) => actions.updateTodoDetailsSuccess({ todo })),
+          catchError((error) => of(actions.updateTodoDetailsFailure({ error })))
         )
       )
     )

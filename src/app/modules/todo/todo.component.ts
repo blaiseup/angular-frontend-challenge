@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { filter, Observable, take } from "rxjs";
-import { getTodos, addTodo, removeTodo, changeTodoStatus, changeTodoName } from "../store/todo/todo.actions";
+import { getTodos, addTodo, removeTodo, changeTodoStatus, changeTodoName, updateTodoDetails } from "../store/todo/todo.actions";
 import { select, Store } from "@ngrx/store";
 import { getAllCompleteTodos, getAllInProgressTodos, getAllTodos } from "../store/todo/todo.selectors";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
@@ -26,7 +26,7 @@ export class TodoComponent implements OnInit {
   }
 
   addNewTodo(props: { name: string; priority: TodoPriority }) {
-    this.store.dispatch(addTodo({ name: props.name }));
+    this.store.dispatch(addTodo({ name: props.name, priority: props.priority }));
   }
 
   changeTodoName(todo: Todo) {
@@ -41,8 +41,12 @@ export class TodoComponent implements OnInit {
       if (!result) {
         return;
       }
-      this.changeTodoName(result);
+      this.updateTodo(result);
     });
+  }
+
+  updateTodo(todo: Todo) {
+    this.store.dispatch(updateTodoDetails({ todoId: todo.id, name: todo.name, priority: todo.priority }));
   }
 
   removeTodo(todo: Todo) {

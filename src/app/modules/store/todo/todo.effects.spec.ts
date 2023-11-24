@@ -2,7 +2,7 @@ import { TodoService } from "src/app/services/todo.service";
 import { TodoEffects } from "./todo.effects";
 import { TestBed } from "@angular/core/testing";
 import * as actions from "./todo.actions";
-import { Todo, TodoStatus } from "src/app/models/todo.model";
+import { Todo, TodoPriority, TodoStatus } from "src/app/models/todo.model";
 import { Observable, catchError, of, throwError } from "rxjs";
 import { provideMockActions } from "@ngrx/effects/testing";
 import { provideMockStore } from "@ngrx/store/testing";
@@ -14,7 +14,14 @@ describe("Todo Effects", () => {
   let actions$ = new Observable<Action>();
 
   beforeEach(() => {
-    todoServiceSpy = jasmine.createSpyObj("TodoService", ["getTodos", "addTodo", "changeTodoName", "changeTodoStatus", "removeTodo"]);
+    todoServiceSpy = jasmine.createSpyObj("TodoService", [
+      "getTodos",
+      "addTodo",
+      "changeTodoName",
+      "changeTodoStatus",
+      "removeTodo",
+      "updateTodoDetails",
+    ]);
     TestBed.configureTestingModule({
       providers: [TodoEffects, provideMockActions(() => actions$), provideMockStore(), { provide: TodoService, useValue: todoServiceSpy }],
     });
@@ -22,7 +29,7 @@ describe("Todo Effects", () => {
   });
 
   it("should dispatch getTodosSuccess on successful getTodos", (done: DoneFn) => {
-    const todoList: Todo[] = [{ id: 1, name: "Todo", status: TodoStatus.InProgress }];
+    const todoList: Todo[] = [{ id: 1, name: "Todo", status: TodoStatus.InProgress, priority: TodoPriority.High }];
     const action = actions.getTodos();
     const outcome = actions.getTodosSuccess({ todoList });
 
@@ -50,8 +57,8 @@ describe("Todo Effects", () => {
   });
 
   it("should dispatch addTodoSuccess on successful addTodo", (done: DoneFn) => {
-    const newTodo: Todo = { id: 1, name: "Todo", status: TodoStatus.InProgress };
-    const action = actions.addTodo({ name: newTodo.name });
+    const newTodo: Todo = { id: 1, name: "Todo", status: TodoStatus.InProgress, priority: TodoPriority.High };
+    const action = actions.addTodo({ name: newTodo.name, priority: newTodo.priority });
     const outcome = actions.addTodoSuccess({ todo: newTodo });
 
     actions$ = of(action);
@@ -65,7 +72,7 @@ describe("Todo Effects", () => {
 
   it("should dispatch addTodoFailure on failed addTodo", (done: DoneFn) => {
     const error = new Error("");
-    const action = actions.addTodo({ name: "Todo" });
+    const action = actions.addTodo({ name: "Todo", priority: TodoPriority.High });
     const outcome = actions.addTodoFailure({ error });
 
     actions$ = of(action);
@@ -78,7 +85,7 @@ describe("Todo Effects", () => {
   });
 
   it("should dispatch changeTodoNameSuccess on successful changeTodoName", (done: DoneFn) => {
-    const updatedTodo: Todo = { id: 1, name: "Todo", status: TodoStatus.InProgress };
+    const updatedTodo: Todo = { id: 1, name: "Todo", status: TodoStatus.InProgress, priority: TodoPriority.High };
     const action = actions.changeTodoName({ todoId: updatedTodo.id, name: updatedTodo.name });
     const outcome = actions.changeTodoNameSuccess({ todo: updatedTodo });
 
@@ -106,7 +113,7 @@ describe("Todo Effects", () => {
   });
 
   it("should dispatch changeTodoStatusSuccess on successful changeTodoStatus", (done: DoneFn) => {
-    const updatedTodo: Todo = { id: 1, name: "Todo", status: TodoStatus.Complete };
+    const updatedTodo: Todo = { id: 1, name: "Todo", status: TodoStatus.Complete, priority: TodoPriority.High };
     const action = actions.changeTodoStatus({ todoId: updatedTodo.id, status: TodoStatus.Complete });
     const outcome = actions.changeTodoStatusSuccess({ todo: updatedTodo });
 
@@ -134,7 +141,7 @@ describe("Todo Effects", () => {
   });
 
   it("should dispatch removeTodoSuccess on successful removeTodo", (done: DoneFn) => {
-    const removedTodo: Todo = { id: 1, name: "Todo", status: TodoStatus.Complete };
+    const removedTodo: Todo = { id: 1, name: "Todo", status: TodoStatus.Complete, priority: TodoPriority.High };
     const action = actions.removeTodo({ todoId: removedTodo.id });
     const outcome = actions.removeTodoSuccess({ todo: removedTodo });
 
@@ -156,6 +163,34 @@ describe("Todo Effects", () => {
     todoServiceSpy.removeTodo.and.returnValue(throwError(() => error));
 
     effects.removeTodo$.subscribe((resultAction) => {
+      expect(resultAction).toEqual(outcome);
+      done();
+    });
+  });
+
+  it("should dispatch updateTodoDetailsSuccess on successful updateTodoDetails", (done: DoneFn) => {
+    const updatedTodo: Todo = { id: 1, name: "Todo", status: TodoStatus.Complete, priority: TodoPriority.High };
+    const action = actions.updateTodoDetails({ todoId: updatedTodo.id, name: updatedTodo.name, priority: updatedTodo.priority });
+    const outcome = actions.updateTodoDetailsSuccess({ todo: updatedTodo });
+
+    actions$ = of(action);
+    todoServiceSpy.updateTodoDetails.and.returnValue(of(updatedTodo));
+
+    effects.updateTodoDetails$.subscribe((resultAction) => {
+      expect(resultAction).toEqual(outcome);
+      done();
+    });
+  });
+
+  it("should dispatch updateTodoDetailsFailure on failed updateTodoDetails", (done: DoneFn) => {
+    const error = new Error("");
+    const action = actions.updateTodoDetails({ todoId: 1, name: "Todo", priority: TodoPriority.High });
+    const outcome = actions.updateTodoDetailsFailure({ error });
+
+    actions$ = of(action);
+    todoServiceSpy.updateTodoDetails.and.returnValue(throwError(() => error));
+
+    effects.updateTodoDetails$.subscribe((resultAction) => {
       expect(resultAction).toEqual(outcome);
       done();
     });

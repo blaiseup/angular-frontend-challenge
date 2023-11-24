@@ -3,21 +3,21 @@
   <mat-tab-group>
     <mat-tab label="All">
       <ng-container *ngIf="allTodos$ | async as allTodos">
-        <app-todo-list [todos]="allTodos" (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
+        <app-todo-list [todos]="allTodos | prioritySort" (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
           (onChangeTodoStatusInProgress)="changeTodoStatusInProgress($event)" (onEditTodo)="editTodo($event)"
           (onRemoveTodo)="removeTodo($event)"></app-todo-list>
       </ng-container>
     </mat-tab>
     <mat-tab label="In Progress">
       <ng-container *ngIf="inProgressTodos$ | async as inProgressTodos">
-        <app-todo-list [todos]=" inProgressTodos" (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
+        <app-todo-list [todos]="inProgressTodos | prioritySort" (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
           (onChangeTodoStatusInProgress)="changeTodoStatusInProgress($event)" (onEditTodo)="editTodo($event)"
           (onRemoveTodo)="removeTodo($event)" [emptyListMessage]="'No todos in progress'"></app-todo-list>
       </ng-container>
     </mat-tab>
     <mat-tab label="Completed">
       <ng-container *ngIf="completeTodos$ | async as completeTodos">
-        <app-todo-list [todos]="completeTodos" (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
+        <app-todo-list [todos]="completeTodos | prioritySort" (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
           (onChangeTodoStatusInProgress)="changeTodoStatusInProgress($event)" (onEditTodo)="editTodo($event)"
           (onRemoveTodo)="removeTodo($event)" [emptyListMessage]="'No completed todos'"></app-todo-list>
       </ng-container>

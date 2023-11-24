@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { TodoListComponent } from "./todo-list.component";
-import { TodoStatus } from "src/app/models/todo.model";
+import { Todo, TodoPriority, TodoStatus } from "src/app/models/todo.model";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 describe("TodoListComponent", () => {
@@ -18,8 +18,8 @@ describe("TodoListComponent", () => {
     fixture = TestBed.createComponent(TodoListComponent);
     component = fixture.componentInstance;
     component.todos = [
-      { id: 1, name: "Todo 1", status: TodoStatus.Complete },
-      { id: 2, name: "Todo 2", status: TodoStatus.InProgress },
+      { id: 1, name: "Todo 1", status: TodoStatus.Complete, priority: TodoPriority.High },
+      { id: 2, name: "Todo 2", status: TodoStatus.InProgress, priority: TodoPriority.High },
     ];
     fixture.detectChanges();
   });
@@ -29,7 +29,7 @@ describe("TodoListComponent", () => {
   });
 
   it("should emit event on changing todo status to complete", () => {
-    const todo = { id: 1, name: "Todo 1", status: TodoStatus.InProgress };
+    const todo: Todo = { id: 1, name: "Todo 1", status: TodoStatus.InProgress, priority: TodoPriority.High };
     spyOn(component.onChangeTodoStatusComplete, "emit");
 
     component.changeTodoStatusComplete(todo);
@@ -38,7 +38,7 @@ describe("TodoListComponent", () => {
   });
 
   it("should emit event on changing todo status to in progress", () => {
-    const todo = { id: 2, name: "Todo 2", status: TodoStatus.Complete };
+    const todo: Todo = { id: 2, name: "Todo 2", status: TodoStatus.Complete, priority: TodoPriority.High };
     spyOn(component.onChangeTodoStatusInProgress, "emit");
 
     component.changeTodoStatusInProgress(todo);
@@ -47,7 +47,7 @@ describe("TodoListComponent", () => {
   });
 
   it("should emit event on removing todo", () => {
-    const todo = { id: 1, name: "Todo 1", status: TodoStatus.Complete };
+    const todo: Todo = { id: 1, name: "Todo 1", status: TodoStatus.Complete, priority: TodoPriority.High };
     spyOn(component.onRemoveTodo, "emit");
 
     component.removeTodo(todo);
