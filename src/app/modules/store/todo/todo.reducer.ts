@@ -18,9 +18,18 @@ const todoReducer = createReducer(
     ...state,
     todoList,
   })),
-  on(actions.changeTodoName, (state, { todo }) => ({
+  on(actions.addTodoSuccess, (state, { todo }) => ({ ...state, todoList: [...state.todoList, todo] })),
+  on(actions.changeTodoNameSuccess, (state, { todo }) => ({
     ...state,
     todoList: state.todoList.map((el) => (el.id === todo.id ? { ...el, name: todo.name } : el)),
+  })),
+  on(actions.changeTodoStatusSuccess, (state, { todo }) => ({
+    ...state,
+    todoList: state.todoList.map((el) => (el.id === todo.id ? { ...el, status: todo.status } : el)),
+  })),
+  on(actions.removeTodoSuccess, (state, { todo }) => ({
+    ...state,
+    todoList: state.todoList.filter((el) => el.id !== todo.id),
   }))
 );
 

@@ -20,5 +20,53 @@ export class TodoEffects {
     )
   );
 
+  addTodo$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.addTodo),
+      switchMap(({ name }) =>
+        this.todoService.addTodo(name).pipe(
+          map((todo) => actions.addTodoSuccess({ todo })),
+          catchError((error) => of(actions.addTodoFailure({ error })))
+        )
+      )
+    )
+  );
+
+  changeTodoName$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.changeTodoName),
+      switchMap(({ todoId, name }) =>
+        this.todoService.changeTodoName(todoId, name).pipe(
+          map((todo) => actions.changeTodoNameSuccess({ todo })),
+          catchError((error) => of(actions.changeTodoNameFailure({ error })))
+        )
+      )
+    )
+  );
+
+  changeTodoStatus$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.changeTodoStatus),
+      switchMap(({ todoId, status }) =>
+        this.todoService.changeTodoStatus(todoId, status).pipe(
+          map((todo) => actions.changeTodoStatusSuccess({ todo })),
+          catchError((error) => of(actions.changeTodoStatusFailure({ error })))
+        )
+      )
+    )
+  );
+
+  removeTodo$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.removeTodo),
+      switchMap(({ todoId }) =>
+        this.todoService.removeTodo(todoId).pipe(
+          map((todo) => actions.removeTodoSuccess({ todo })),
+          catchError((error) => of(actions.removeTodoFailure({ error })))
+        )
+      )
+    )
+  );
+
   constructor(private readonly actions$: Actions, private readonly store: Store, private readonly todoService: TodoService) {}
 }
