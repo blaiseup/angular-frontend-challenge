@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Todo, TodoPriority } from "src/app/models/todo.model";
 
@@ -8,8 +8,8 @@ import { Todo, TodoPriority } from "src/app/models/todo.model";
   styleUrls: ["./todo-form.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoFormComponent implements OnInit {
-  @Input() todo!: Todo;
+export class TodoFormComponent implements OnChanges {
+  @Input() todo: Todo;
 
   @Output() todoSubmitted = new EventEmitter<{ name: string; priority: TodoPriority }>();
 
@@ -24,7 +24,7 @@ export class TodoFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     if (this.todo) {
       this.todoForm.patchValue({
         name: this.todo.name,
