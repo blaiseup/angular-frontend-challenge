@@ -15,7 +15,7 @@ export class TodoService {
 
   addTodo(name: string): Observable<Todo> {
     const newTodo: Todo = {
-      id: Math.max(...this.mockTodos.map((todo) => todo.id)) + 1,
+      id: Math.max(1, ...this.mockTodos.map((todo) => todo.id)) + 1,
       name: name,
       status: TodoStatus.InProgress,
     };
