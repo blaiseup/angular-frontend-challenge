@@ -13,9 +13,10 @@ import { EditTodoDialogComponent } from "./components/edit-todo-dialog/edit-todo
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDialogModule } from "@angular/material/dialog";
 import { TodoFormComponent } from "./components/todo-form/todo-form.component";
+import { TodoListComponent } from "./components/todo-list/todo-list.component";
 
 @NgModule({
-  declarations: [TodoComponent, EditTodoDialogComponent, TodoFormComponent],
+  declarations: [TodoComponent, EditTodoDialogComponent, TodoFormComponent, TodoListComponent],
   imports: [
     CommonModule,
     TodoRoutingModule,
