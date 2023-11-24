@@ -6,6 +6,7 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MatInputModule } from "@angular/material/input";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 describe("TodoComponent", () => {
   let component: TodoComponent;
@@ -16,6 +17,7 @@ describe("TodoComponent", () => {
       imports: [NoopAnimationsModule, MatDialogModule, MatTabsModule, MatInputModule, FormsModule, ReactiveFormsModule],
       declarations: [TodoComponent],
       providers: [provideMockStore()],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TodoComponent);
