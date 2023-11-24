@@ -10,7 +10,7 @@ export class TodoService {
   private mockTodos: Todo[] = MOCK_TODOS;
 
   getTodos(): Observable<Todo[]> {
-    return of(this.mockTodos).pipe(delay(500));
+    return of(JSON.parse(JSON.stringify(this.mockTodos))).pipe(delay(100));
   }
 
   addTodo(name: string): Observable<Todo> {
@@ -20,7 +20,7 @@ export class TodoService {
       status: TodoStatus.InProgress,
     };
     this.mockTodos.push(newTodo);
-    return of(newTodo).pipe(delay(500));
+    return of(JSON.parse(JSON.stringify(newTodo))).pipe(delay(100));
   }
 
   changeTodoName(id: number, name: string): Observable<Todo> {
@@ -29,7 +29,7 @@ export class TodoService {
       throw new Error(`Todo with id ${id} not found`);
     }
     currentTodo.name = name;
-    return of(currentTodo).pipe(delay(500));
+    return of(JSON.parse(JSON.stringify(currentTodo))).pipe(delay(100));
   }
 
   changeTodoStatus(id: number, status: TodoStatus): Observable<Todo> {
@@ -38,7 +38,7 @@ export class TodoService {
       throw new Error(`Todo with id ${id} not found`);
     }
     currentTodo.status = status;
-    return of(currentTodo).pipe(delay(500));
+    return of(JSON.parse(JSON.stringify(currentTodo))).pipe(delay(100));
   }
 
   removeTodo(id: number): Observable<Todo> {
@@ -47,6 +47,6 @@ export class TodoService {
       throw new Error(`Todo with id ${id} not found`);
     }
     this.mockTodos = this.mockTodos.filter((todo) => todo.id !== currentTodo.id);
-    return of(currentTodo).pipe(delay(500));
+    return of(currentTodo).pipe(delay(100));
   }
 }
