@@ -15,9 +15,17 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { TodoFormComponent } from "./components/todo-form/todo-form.component";
 import { TodoListComponent } from "./components/todo-list/todo-list.component";
 import { PrioritySortPipe } from "./pipes/priority-sort.pipe";
+import { TodoPriorityIndicatorComponent } from "./components/todo-priority-indicator/todo-priority-indicator.component";
 
 @NgModule({
-  declarations: [TodoComponent, EditTodoDialogComponent, TodoFormComponent, TodoListComponent, PrioritySortPipe],
+  declarations: [
+    TodoComponent,
+    EditTodoDialogComponent,
+    TodoFormComponent,
+    TodoListComponent,
+    PrioritySortPipe,
+    TodoPriorityIndicatorComponent,
+  ],
   imports: [
     CommonModule,
     TodoRoutingModule,

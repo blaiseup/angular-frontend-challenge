@@ -1,0 +1,12 @@
+mat-icon {
+  vertical-align: sub;
+}
+mat-icon.high-priority {
+  color: #ec4700;
+}
+mat-icon.medium-priority {
+  color: #ffcc00;
+}
+mat-icon.low-priority {
+  color: #3cc800;
+}

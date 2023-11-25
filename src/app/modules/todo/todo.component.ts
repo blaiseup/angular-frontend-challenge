@@ -13,8 +13,6 @@ import { Todo, TodoPriority, TodoStatus } from "src/app/models/todo.model";
   styleUrls: ["./todo.component.css"],
 })
 export class TodoComponent implements OnInit {
-  statusEnum = TodoStatus;
-
   allTodos$: Observable<Todo[]> = this.store.pipe(select(getAllTodos));
   inProgressTodos$: Observable<Todo[]> = this.store.pipe(select(getAllInProgressTodos));
   completeTodos$: Observable<Todo[]> = this.store.pipe(select(getAllCompleteTodos));

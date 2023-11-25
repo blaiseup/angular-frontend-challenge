@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
-import { Todo, TodoStatus } from "src/app/models/todo.model";
+import { Todo, TodoPriority, TodoStatus } from "src/app/models/todo.model";
 
 @Component({
   selector: "app-todo-list",
@@ -8,7 +8,9 @@ import { Todo, TodoStatus } from "src/app/models/todo.model";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoListComponent {
-  statusEnum = TodoStatus;
+  todoStatuses = TodoStatus;
+
+  todoPriorities = TodoPriority;
 
   @Input() todos: Todo[];
 

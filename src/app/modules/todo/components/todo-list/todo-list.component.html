@@ -1,8 +1,11 @@
-<div class="todo-item" *ngFor="let todo of todos">
-  <span>{{ todo.name }}</span>
+<div class="todo-item" [class.todo-item-complete]="todo.status === todoStatuses.Complete" *ngFor="let todo of todos">
+  <span>
+    <app-todo-priority-indicator [todoPriority]="todo.priority"></app-todo-priority-indicator>
+    <span class="todo-item-name">{{ todo.name }}</span>
+  </span>
 
   <div class="todo-actions">
-    <ng-container *ngIf="todo.status === statusEnum.InProgress; else completed">
+    <ng-container *ngIf="todo.status === todoStatuses.InProgress; else completed">
       <button mat-mini-fab color="default" aria-label="Set Complete" (click)="changeTodoStatusComplete(todo)">
         <mat-icon>done</mat-icon>
       </button>
