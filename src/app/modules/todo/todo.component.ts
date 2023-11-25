@@ -17,7 +17,7 @@ export class TodoComponent implements OnInit {
   inProgressTodos$: Observable<Todo[]> = this.store.pipe(select(getAllInProgressTodos));
   completeTodos$: Observable<Todo[]> = this.store.pipe(select(getAllCompleteTodos));
 
-  constructor(private store: Store, private dialog: MatDialog) {}
+  constructor(private store: Store, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.store.dispatch(getTodos());
