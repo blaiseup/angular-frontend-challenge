@@ -9,8 +9,8 @@ import { MOCK_TODOS } from "../mocks/todos.mock";
 export class TodoService {
   private mockTodos: Todo[] = MOCK_TODOS;
 
-  getTodos(): Observable<Todo[]> {
-    return of(JSON.parse(JSON.stringify(this.mockTodos))).pipe(delay(100));
+  getTodos(searchTerm: string = ""): Observable<Todo[]> {
+    return of(JSON.parse(JSON.stringify(this.mockTodos.filter((todo) => todo.name.includes(searchTerm))))).pipe(delay(100));
   }
 
   addTodo(name: string, priority: TodoPriority): Observable<Todo> {

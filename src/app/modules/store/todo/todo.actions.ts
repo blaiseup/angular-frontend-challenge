@@ -28,3 +28,7 @@ export const changeTodoStatusFailure = createFailureAction(changeTodoStatus);
 export const removeTodo = createAction("[ToDo] Remove ToDo Item", props<{ todoId: number }>());
 export const removeTodoSuccess = createSuccessAction(removeTodo, props<{ todo: Todo }>());
 export const removeTodoFailure = createFailureAction(removeTodo);
+
+export const searchTodoList = createAction("[ToDo] search ToDos", props<{ term: string }>());
+export const searchTodoListSuccess = createSuccessAction(searchTodoList, props<{ todoList: Todo[] }>());
+export const searchTodoListFailure = createFailureAction(searchTodoList);

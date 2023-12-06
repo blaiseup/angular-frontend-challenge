@@ -1,11 +1,20 @@
 import { Component, OnInit } from "@angular/core";
 import { filter, Observable, take } from "rxjs";
-import { getTodos, addTodo, removeTodo, changeTodoStatus, changeTodoName, updateTodoDetails } from "../store/todo/todo.actions";
+import {
+  getTodos,
+  addTodo,
+  removeTodo,
+  changeTodoStatus,
+  changeTodoName,
+  updateTodoDetails,
+  searchTodoList,
+} from "../store/todo/todo.actions";
 import { select, Store } from "@ngrx/store";
 import { getAllCompleteTodos, getAllInProgressTodos, getAllTodos } from "../store/todo/todo.selectors";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { EditTodoDialogComponent } from "./components/edit-todo-dialog/edit-todo-dialog.component";
 import { Todo, TodoPriority, TodoStatus } from "src/app/models/todo.model";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-todo",
@@ -17,7 +26,11 @@ export class TodoComponent implements OnInit {
   inProgressTodos$: Observable<Todo[]> = this.store.pipe(select(getAllInProgressTodos));
   completeTodos$: Observable<Todo[]> = this.store.pipe(select(getAllCompleteTodos));
 
-  constructor(private store: Store, public dialog: MatDialog) {}
+  searchForm = this.fb.group({
+    term: [""],
+  });
+
+  constructor(private store: Store, public dialog: MatDialog, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.store.dispatch(getTodos());
@@ -57,5 +70,11 @@ export class TodoComponent implements OnInit {
 
   changeTodoStatusInProgress(todo: Todo) {
     this.store.dispatch(changeTodoStatus({ todoId: todo.id, status: TodoStatus.InProgress }));
+  }
+
+  searchTodo() {
+    if (this.searchForm.valid) {
+      this.store.dispatch(searchTodoList({ term: this.searchForm.value.term || "" }));
+    }
   }
 }

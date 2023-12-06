@@ -25,10 +25,10 @@ A `ListItem` looks like below:
 
 ### Main Objectives
 
-1. So far only listing all items is working. Please also add the feature that you can filter for items that are in progress or complete on the other tabs.
-2. The functions for adding list items, changing status or removing are missing in the state/store. Please add them.
-3. Refactor the list component into a reusable component across All, In Progress and Completed todos
-4. So far you aren't able to change the name of a todo item. Please implement the feature that this is possible.
+1. So far only listing all items is working. Please also add the feature that you can filter for items that are in progress or complete on the other tabs. ✅
+2. The functions for adding list items, changing status or removing are missing in the state/store. Please add them. ✅
+3. Refactor the list component into a reusable component across All, In Progress and Completed todos ✅
+4. So far you aren't able to change the name of a todo item. Please implement the feature that this is possible. 
 5. Please add unit tests to the components and the store where you think they are necessary.
 
 ### Bonus Objectives

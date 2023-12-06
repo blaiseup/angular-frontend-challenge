@@ -1,5 +1,14 @@
 <div class="container">
   <app-todo-form (todoSubmitted)="addNewTodo($event)"></app-todo-form>
+  <form (ngSubmit)="searchTodo()" [formGroup]="searchForm">
+    <mat-form-field>
+      <mat-label>Todo List Item</mat-label>
+      <input matInput placeholder="send" formControlName="term">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="searchForm.invalid" type="submit">Search</button>
+
+  </form>
   <mat-tab-group>
     <mat-tab label="All">
       <ng-container *ngIf="allTodos$ | async as allTodos">
@@ -10,14 +19,16 @@
     </mat-tab>
     <mat-tab label="In Progress">
       <ng-container *ngIf="inProgressTodos$ | async as inProgressTodos">
-        <app-todo-list [todos]="inProgressTodos | prioritySort" (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
+        <app-todo-list [todos]="inProgressTodos | prioritySort"
+          (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
           (onChangeTodoStatusInProgress)="changeTodoStatusInProgress($event)" (onEditTodo)="editTodo($event)"
           (onRemoveTodo)="removeTodo($event)" [emptyListMessage]="'No todos in progress'"></app-todo-list>
       </ng-container>
     </mat-tab>
     <mat-tab label="Completed">
       <ng-container *ngIf="completeTodos$ | async as completeTodos">
-        <app-todo-list [todos]="completeTodos | prioritySort" (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
+        <app-todo-list [todos]="completeTodos | prioritySort"
+          (onChangeTodoStatusComplete)="changeTodoStatusComplete($event)"
           (onChangeTodoStatusInProgress)="changeTodoStatusInProgress($event)" (onEditTodo)="editTodo($event)"
           (onRemoveTodo)="removeTodo($event)" [emptyListMessage]="'No completed todos'"></app-todo-list>
       </ng-container>

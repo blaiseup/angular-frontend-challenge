@@ -1,6 +1,7 @@
 import { Action, createReducer, on } from "@ngrx/store";
 import * as actions from "./todo.actions";
 import { Todo } from "src/app/models/todo.model";
+import { state } from "@angular/animations";
 
 export const TODO_FEATURE_KEY = "todo-store";
 
@@ -34,6 +35,10 @@ const todoReducer = createReducer(
   on(actions.updateTodoDetailsSuccess, (state, { todo }) => ({
     ...state,
     todoList: state.todoList.map((el) => (el.id === todo.id ? { ...el, name: todo.name, priority: todo.priority } : el)),
+  })),
+  on(actions.searchTodoListSuccess, (state, { todoList }) => ({
+    ...state,
+    todoList,
   }))
 );
 

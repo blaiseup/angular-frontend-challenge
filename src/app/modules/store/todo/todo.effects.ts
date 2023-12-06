@@ -20,6 +20,18 @@ export class TodoEffects {
     )
   );
 
+  searchToDoList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.searchTodoList),
+      switchMap(({ term }) =>
+        this.todoService.getTodos(term).pipe(
+          map((todoList) => actions.searchTodoListSuccess({ todoList })),
+          catchError((error) => of(actions.searchTodoListFailure({ error })))
+        )
+      )
+    )
+  );
+
   addTodo$ = createEffect(() =>
     this.actions$.pipe(
       ofType(actions.addTodo),
